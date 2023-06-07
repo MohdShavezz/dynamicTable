@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            padding: 0;margin: 0;box-sizing: border-box;
+        }
+        table,th,td {
+            border: 1px solid;
+            padding: 5px;
+            text-align: center;
+        }
+
+        table {border: 1px solid;border-collapse: collapse;width:70%;margin: auto;}
+        .par{display: flex;justify-content: center;flex-direction: column;gap: 5px;padding: 10px ;margin-top: 10px;}
+        .par input{ width: 40%;margin: auto;}
+    </style>
+</head>
+
+<body>
+    <!-- <input type="button" id="left" value="btn" onclick="loadXMLDoc()">
+    <p></p> -->
+
+    <div class="par">
+        <input type="text" name="" id="row" placeholder="Number of rows">
+        <input type="text" name="" id="col" placeholder="Number of columns (2-9)"> 
+        <input type="text" name="" id="colNames" placeholder="Columns heading comma ',' seperated Eg: C1,C2,C3..."> 
+         <input type="button" value="click" onclick="dynamic()">
+        <p align="center"></p>
+        <table id="table"></table>
+    </div>
+    <script>
+
+        function dynamic() {     
+
+            let table = document.getElementById('table')
+            let row = document.getElementById('row').value || 1
+            let col = document.getElementById('col').value
+            
+            let colNames = document.getElementById('colNames')
+            let arr = colNames.value.split(',')
+
+            let p=document.querySelector('p')
+            p.style='none'
+
+            if ((col > 1 && col < 10)) {
+                for (let i = 0; i < row; i++) {
+                    let tr = document.createElement('tr')
+                    if (i == 0 && !arr.includes('')) {
+                        for (let j = 0; j < col; j++) {
+                            let th = document.createElement('th')
+                            let text = document.createTextNode(arr[j])
+                            th.appendChild(text)
+                            tr.appendChild(th)
+                        }
+                    } else {
+                        let len=col
+                        if(col>9){
+                            len=arr.length
+                        }
+                        for (let j = 0; j < len; j++) {
+                            let td = document.createElement('td')
+                            let text = document.createTextNode(j)
+                            td.appendChild(text)
+                            tr.appendChild(td)
+                        }
+                    }
+
+                    table.appendChild(tr)
+                }
+            } else {               
+                p.style.color = "red"
+                p.innerHTML = "Columns should be between 1-10"
+                setTimeout(() => {
+                    p.style.display = 'none';
+                }, 2000);
+            }
+
+        }
+
+
+
+    //     function loadXMLDoc() {
+    //         const xhttp = new XMLHttpRequest();
+    //         xhttp.onload = function () {
+    //             const xmlDoc = xhttp.responseXML;
+    //             const cd = xmlDoc.getElementsByTagName("CD");
+    //             myFunction(cd);
+    //         }
+    //         xhttp.open("GET", "test.xml");
+    //         xhttp.send();
+    //     }
+    //     function myFunction(cd) {
+    //         let tbl = "<table><tr><th>Artist</th><th>Country</th></tr>"
+    //         for (let i of cd) {
+    //             tbl += "<tr><td>" + i.getElementsByTagName('ARTIST')[0].childNodes[0].nodeValue + "</td><td>" + i.getElementsByTagName('COUNTRY')[0].childNodes[0].nodeValue + "</td></tr> </table>"
+
+    //         }
+    //         document.querySelector('p').innerHTML = tbl
+    //     }
+    
+    </script>
+</body>
+
+</html>
